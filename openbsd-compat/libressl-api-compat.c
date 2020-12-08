@@ -334,7 +334,7 @@ RSA_set0_factors(RSA *r, BIGNUM *p, BIGNUM *q)
 }
 #endif /* HAVE_RSA_SET0_FACTORS */
 
-#ifndef HAVE_EVP_CIPHER_CTX_GET_IV
+#if !defined(HAVE_EVP_CIPHER_CTX_GET_IV) && !defined(HAVE_EVP_CIPHER_CTX_GET_IV_STATE)
 int
 EVP_CIPHER_CTX_get_iv(const EVP_CIPHER_CTX *ctx, unsigned char *iv, size_t len)
 {
@@ -361,7 +361,15 @@ EVP_CIPHER_CTX_get_iv(const EVP_CIPHER_CTX *ctx, unsigned char *iv, size_t len)
 	}
 	return 1;
 }
-#endif /* HAVE_EVP_CIPHER_CTX_GET_IV */
+#endif /* !HAVE_EVP_CIPHER_CTX_GET_IV && !HAVE_EVP_CIPHER_CTX_GET_IV_STATE */
+
+#ifdef HAVE_EVP_CIPHER_CTX_GET_IV_STATE
+int
+EVP_CIPHER_CTX_get_iv(EVP_CIPHER_CTX *ctx, void *iv, size_t len)
+{
+	return EVP_CIPHER_CTX_get_iv_state(ctx, iv, len);
+}
+#endif /* HAVE_EVP_CIPHER_CTX_GET_IV_STATE*/
 
 #ifndef HAVE_EVP_CIPHER_CTX_SET_IV
 int

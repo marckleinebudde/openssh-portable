@@ -2875,6 +2875,11 @@ if test "x$openssl" = "xyes" ; then
 		EVP_chacha20 \
 	])
 
+	# OpenSSL 3.x API
+	AC_CHECK_FUNCS([ \
+		EVP_CIPHER_CTX_get_iv_state \
+	])
+
 	if test "x$openssl_engine" = "xyes" ; then
 		AC_MSG_CHECKING([for OpenSSL ENGINE support])
 		AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
