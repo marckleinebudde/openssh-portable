@@ -68,6 +68,12 @@ void ssh_libcrypto_init(void);
 # endif
 #endif
 
+#ifdef OPENSSL_VERSION_NUMBER
+# if OPENSSL_VERSION_NUMBER == 0x30000000
+#  define HAVE_BROKEN_CHACHA20
+# endif
+#endif
+
 #ifndef OPENSSL_HAVE_EVPCTR
 # define EVP_aes_128_ctr evp_aes_128_ctr
 # define EVP_aes_192_ctr evp_aes_128_ctr
